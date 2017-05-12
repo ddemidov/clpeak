@@ -22,7 +22,8 @@ class clPeak
 public:
 
   bool forcePlatform, forceDevice, useEventTimer;
-  bool isGlobalBW, isComputeSP, isComputeDP, isComputeInt, isTransferBW, isKernelLatency;
+  bool isGlobalBW, isComputeSP, isComputeDP, isComputeEDP, isComputeInt;
+  bool isTransferBW, isKernelLatency;
   int specifiedPlatform, specifiedDevice;
   logger *log;
 
@@ -41,6 +42,8 @@ public:
   int runComputeHP(cl::CommandQueue &queue, cl::Program &prog, device_info_t &devInfo);
 
   int runComputeDP(cl::CommandQueue &queue, cl::Program &prog, device_info_t &devInfo);
+
+  int runComputeEDP(cl::CommandQueue &queue, cl::Program &prog, device_info_t &devInfo);
 
   int runComputeInteger(cl::CommandQueue &queue, cl::Program &prog, device_info_t &devInfo);
 

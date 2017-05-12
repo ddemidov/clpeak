@@ -7,6 +7,7 @@ static const char *stringifiedKernels =
     #include "compute_sp_kernels.cl"
     #include "compute_hp_kernels.cl"
     #include "compute_dp_kernels.cl"
+    #include "compute_emulated_dp_kernels.cl"
     #include "compute_integer_kernels.cl"
     ;
 
@@ -15,6 +16,7 @@ static const char *stringifiedKernelsNoInt =
     #include "compute_sp_kernels.cl"
     #include "compute_hp_kernels.cl"
     #include "compute_dp_kernels.cl"
+    #include "compute_emulated_dp_kernels.cl"
     ;
 
 #ifdef USE_STUB_OPENCL
@@ -26,8 +28,8 @@ void stubOpenclReset();
 
 
 clPeak::clPeak(): forcePlatform(false), forceDevice(false), useEventTimer(false),
-    isGlobalBW(true), isComputeSP(true), isComputeDP(true), isComputeInt(true),
-    isTransferBW(true), isKernelLatency(true),
+    isGlobalBW(true), isComputeSP(true), isComputeDP(true), isComputeEDP(true),
+    isComputeInt(true), isTransferBW(true), isKernelLatency(true),
     specifiedPlatform(-1), specifiedDevice(-1)
 {
 }
@@ -132,6 +134,7 @@ int clPeak::runAll()
         runComputeSP(queue, prog, devInfo);
         runComputeHP(queue, prog, devInfo);
         runComputeDP(queue, prog, devInfo);
+        runComputeEDP(queue, prog, devInfo);
         runComputeInteger(queue, prog, devInfo);
         runTransferBandwidthTest(queue, prog, devInfo);
         runKernelLatency(queue, prog, devInfo);
